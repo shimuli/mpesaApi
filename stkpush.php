@@ -1,5 +1,6 @@
 <?php
-$con = mysqli_connect("localhost", "mwlqobar_nyangena", "nyangena@2020", "mwlqobar_NyangenaMpesa");
+$con = mysqli_connect("localhost", "orbcouri_cedric", "cedric@2020", "orbcouri_Payments");
+$response = array();
 
 if (mysqli_connect_errno()) {
     echo "Failed to connect to MySQL: " . mysqli_connect_error();
@@ -11,18 +12,17 @@ if (mysqli_connect_errno()) {
 
 function pay()
 {
-    if (isset($_GET['phonenumber']) && $_GET['phonenumber'] != "" && $_GET['amount'] != "") {
-
+    if (isset($_GET['phonenumber']) && $_GET['phonenumber'] != "" && $_GET['amount'] !="" && $_GET['account'] !="") {
+        
         date_default_timezone_set('Africa/Nairobi');
         $consumerKey = 'AOxaYEJIjDWgkQAAf5QfiDEqcCJd9WME';
         $consumerSecret = 't6e1T5aKe9sBOlB0';
         $BusinessShortCode = '174379';
         $Passkey = 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919';
         $number = $_GET['phonenumber']; // This is your phone number,
-        $AccountReference = 'Fee254';
+        $AccountReference = $_GET['account'];
         $TransactionDesc = 'Fee Payment';
         $Amount = $_GET['amount'];
-
         $numberTrimed = substr($number, 1);
         $PartyA = "254{$numberTrimed}";
 
@@ -82,7 +82,7 @@ function pay()
         print_r($curl_response);
         echo $curl_response;
         echo $id;
-        echo $name;
+        echo $name ;
     } else {
         echo 'Invalid Request';
     }
